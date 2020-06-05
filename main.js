@@ -1,9 +1,3 @@
-/*
- * Sample plugin scaffolding for Adobe XD.
- *
- * Visit http://adobexdplatform.com/ for API docs and more sample code.
- */
-
 let panel;
 
 function create() {
