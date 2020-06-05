@@ -6,15 +6,16 @@ function create() {
 	label.row {
 		display: flex;
 		flex-direction: column;
+		position: relative;
 	}
 	label {
-		
+		position: relative;
 	}
     label > span {
 		cursor: pointer;
         color: #8E8E8E;
         text-align: center;
-		width: 100%;
+		width: 90%;
         font-size: 9px;
 		display: block;
 		border: 2px solid #8E8E8E;
@@ -22,7 +23,10 @@ function create() {
 		border-radius: 4px;
     }
 	label input[type=checkbox] {
-		display: none;
+		display: inline-block;
+		position: absolute;
+		top: 2px;
+		left: 8px;
 	}
 	label input[type=checkbox]:checked + span {
 		background-color: #8E8E8E;
@@ -35,6 +39,19 @@ function create() {
 	.subhead {
 		font-weight: 700;
 	}
+	.extlink { width: 10%; position: relative; }
+	.extlink:after {
+		content: '';
+		width: 16px;
+		height: 16px;
+		position: absolute;
+		top: -2px;
+		background-image: url(images/external-link.png);
+		opacity: 0.5;
+	}
+	.extlink:hover:after {
+		opacity: 1;
+	}
     .show {
         display: block;
     }
@@ -44,18 +61,36 @@ function create() {
 </style>
 
 <form method="dialog" id="main">
-	<div class="row"><p class="subhead">Standardwerbeformen - <a href="https://www.iqm.de/fileadmin/user_upload/Medien/Online/Werbeformate/Technische_Spezifikationen_d.pdf#page=24&zoom=auto,-16,540">Mehr</a></p></div>
+	<div class="row">
+		<p class="subhead">Display Ads</p>
+	</div>
     <div class="row">
         <label>
             <input type="checkbox" uxp-quiet="true" id="superbanner" name="banner" value="superbanner" />
 			<span>Superbanner</span>
         </label>
+		<a class="extlink" href="https://www.iqm.de/fileadmin/user_upload/Medien/Online/Werbeformate/Technische_Spezifikationen_d.pdf#page=25&zoom=auto,-16,540"></a>
     </div>
-    <div class="row">
+	<div class="row">
         <label>
-            <input type="checkbox" uxp-quiet="true" id="newArtboard2" name="banner" value="newArtboard2" />
-			<span>Banner 2</span>
+            <input type="checkbox" uxp-quiet="true" id="skyscraper" name="banner" value="skyscraper" />
+			<span>Skyscraper</span>
         </label>
+		<a class="extlink" href="https://www.iqm.de/fileadmin/user_upload/Medien/Online/Werbeformate/Technische_Spezifikationen_d.pdf#page=25&zoom=auto,-16,540"></a>
+    </div>
+	<div class="row">
+        <label>
+            <input type="checkbox" uxp-quiet="true" id="mediumrectangle" name="banner" value="mediumrectangle" />
+			<span>Medium Rectangle</span>
+        </label>
+		<a class="extlink" href="https://www.iqm.de/fileadmin/user_upload/Medien/Online/Werbeformate/Technische_Spezifikationen_d.pdf#page=25&zoom=auto,-16,540"></a>
+    </div>
+	<div class="row">
+        <label>
+            <input type="checkbox" uxp-quiet="true" id="mediumrectangle" name="banner" value="mediumrectangle" />
+			<span>Medium Rectangle</span>
+        </label>
+		<a class="extlink" href="https://www.iqm.de/fileadmin/user_upload/Medien/Online/Werbeformate/Technische_Spezifikationen_d.pdf#page=20&zoom=auto,-16,540"></a>
     </div>
 	<hr>
     <footer><button id="ok" type="submit" uxp-variant="cta">Zeichenflächen erstellen</button></footer>
@@ -72,19 +107,22 @@ function create() {
 		editDocument({ editLabel: "Increase rectangle size" }, function(selection) {
 			
 		// create artboard instances
-		let yVal = -60;
+		let yVal = 0;
 		const superbanner = new Artboard();
-		const newArtboard2 = new Artboard();
-			
 		const superbannerText = "Superbanner";
-		const mobileHighImpact = "Mobile High Impact";
-
-		// specify artboard dimensions
 		specifyArtboard(superbanner, superbannerText, 728, 90);
-		specifyArtboard(newArtboard2, "Blabla", 400, 80);
+			
+		const skyscraper = new Artboard();
+		const skyscraperText = "Skyscraper";
+		specifyArtboard(skyscraper, skyscraperText, 120, 600);
+			
+		const mediumrectangle = new Artboard();
+		const mediumrectangleText = "Medium Rectangle";
+		specifyArtboard(mediumrectangle, mediumrectangleText, 300, 250);
+
 
 		// create array
-		let artboards = {superbanner, newArtboard2};
+		let artboards = {superbanner, skyscraper, mediumrectangle};
 		let checkboxesChecked = [];
 
 		// Pass the checkbox name to the function
@@ -112,13 +150,14 @@ function create() {
 
 			// build artboards
 			for (const artboard of checkboxesChecked) {
-				yVal += artboard.height + 60;
 
 				selection.insertionParent.addChild(artboard);
 				artboard.moveInParentCoordinates(0, yVal);
 				
-				if (artboard.name == superbannerText) {
-					specifyText("Text", artboard);
+				yVal += artboard.height + 60;
+				
+				if (artboard.name == superbannerText || artboard.name == skyscraperText || artboard.name == mediumrectangleText ){
+					specifyText("Max. 200 KiloByte", artboard);
 				}
 				
 			}
@@ -135,7 +174,7 @@ function create() {
 		function specifyText(txt, board) {
 			const node = new Text();
 			node.text = txt;
-			node.fill = new Color("#FF0000");
+			node.fill = new Color("#e61849");
 			node.fontSize = 12;
 			board.addChild(node);
 			node.moveInParentCoordinates(10, 20);
