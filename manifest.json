@@ -1,0 +1,25 @@
+{
+  "name": "F.A.Z. Banners",
+  "host": {
+    "app": "XD",
+    "minVersion": "21.0"
+  },
+  "id": "1bf4329a",
+  "icons": [{
+    "path": "images/icon@1x.png",
+    "width": 24,
+    "height": 24
+  }, {
+    "path": "images/icon@2x.png",
+    "width": 48,
+    "height": 48
+  }],
+  "uiEntryPoints": [
+	  {
+		"label": "Create Rectangle",
+		"type": "panel",
+		"panelId": "createBanners"
+	  }
+  ],
+  "version": "0.0.1"
+}
